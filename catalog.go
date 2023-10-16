@@ -10,23 +10,25 @@ This function converts a star's catalog data from the old FK4
 (Bessel-Newcomb) system to the later IAU 1976 FK5 (Fricke) system.
 
 Given: (all B1950.0, FK4)
-    r1950,d1950    float64   B1950.0 RA,Dec (rad)
-    dr1950,dd1950  float64   B1950.0 proper motions (rad/trop.yr)
-    p1950          float64   parallax (arcsec)
-    v1950          float64   radial velocity (km/s, +ve = moving away)
+
+	r1950,d1950    float64   B1950.0 RA,Dec (rad)
+	dr1950,dd1950  float64   B1950.0 proper motions (rad/trop.yr)
+	p1950          float64   parallax (arcsec)
+	v1950          float64   radial velocity (km/s, +ve = moving away)
 
 Returned: (all J2000.0, FK5)
-    r2000,d2000    float64   J2000.0 RA,Dec (rad)
-    dr2000,dd2000  float64   J2000.0 proper motions (rad/Jul.yr)
-    p2000          float64   parallax (arcsec)
-    v2000          float64   radial velocity (km/s, +ve = moving away)
+
+	r2000,d2000    float64   J2000.0 RA,Dec (rad)
+	dr2000,dd2000  float64   J2000.0 proper motions (rad/Jul.yr)
+	p2000          float64   parallax (arcsec)
+	v2000          float64   radial velocity (km/s, +ve = moving away)
 
 Notes:
 
- 1) The proper motions in RA are dRA/dt rather than cos(Dec)*dRA/dt,
+ 1. The proper motions in RA are dRA/dt rather than cos(Dec)*dRA/dt,
     and are per year rather than per century.
 
- 2) The conversion is somewhat complicated, for several reasons:
+ 2. The conversion is somewhat complicated, for several reasons:
 
     . Change of standard epoch from B1950.0 to J2000.0.
 
@@ -37,13 +39,13 @@ Notes:
     . Change of time unit for proper motion (tropical to Julian).
 
     . FK4 positions include the E-terms of aberration, to simplify
-      the hand computation of annual aberration.  FK5 positions
-      assume a rigorous aberration computation based on the Earth's
-      barycentric velocity.
+    the hand computation of annual aberration.  FK5 positions
+    assume a rigorous aberration computation based on the Earth's
+    barycentric velocity.
 
     . The E-terms also affect proper motions, and in particular cause
-      objects at large distances to exhibit fictitious proper
-      motions.
+    objects at large distances to exhibit fictitious proper
+    motions.
 
     The algorithm is based on Smith et al. (1989) and Yallop et al.
     (1989), which presented a matrix method due to Standish (1982) as
@@ -51,11 +53,11 @@ Notes:
     Andoyer's post-Newcomb precession.  The numerical constants from
     Seidelmann (1992) are used canonically.
 
- 3) Conversion from B1950.0 FK4 to J2000.0 FK5 only is provided for.
+ 3. Conversion from B1950.0 FK4 to J2000.0 FK5 only is provided for.
     Conversions for different epochs and equinoxes would require
     additional treatment for precession, proper motion and E-terms.
 
- 4) In the FK4 catalog the proper motions of stars within 10 degrees
+ 4. In the FK4 catalog the proper motions of stars within 10 degrees
     of the poles do not embody differential E-terms effects and
     should, strictly speaking, be handled in a different manner from
     stars outside these regions.  However, given the general lack of
@@ -74,34 +76,35 @@ Notes:
     proper motion.
 
 Called:
-    Anp       normalize angle into range 0 to 2pi
-    Pv2s      pv-vector to spherical coordinates
-    Pdp       scalar product of two p-vectors
-    Pvmpv     pv-vector minus pv_vector
-    Pvppv     pv-vector plus pv_vector
-    S2pv      spherical coordinates to pv-vector
-    Sxp       multiply p-vector by scalar
+
+	Anp       normalize angle into range 0 to 2pi
+	Pv2s      pv-vector to spherical coordinates
+	Pdp       scalar product of two p-vectors
+	Pvmpv     pv-vector minus pv_vector
+	Pvppv     pv-vector plus pv_vector
+	S2pv      spherical coordinates to pv-vector
+	Sxp       multiply p-vector by scalar
 
 References:
 
-    Aoki, S. et al., 1983, "Conversion matrix of epoch B1950.0
-    FK4-based positions of stars to epoch J2000.0 positions in
-    accordance with the new IAU resolutions".  Astron.Astrophys.
-    128, 263-267.
+	Aoki, S. et al., 1983, "Conversion matrix of epoch B1950.0
+	FK4-based positions of stars to epoch J2000.0 positions in
+	accordance with the new IAU resolutions".  Astron.Astrophys.
+	128, 263-267.
 
-    Seidelmann, P.K. (ed), 1992, "Explanatory Supplement to the
-    Astronomical Almanac", ISBN 0-935702-68-7.
+	Seidelmann, P.K. (ed), 1992, "Explanatory Supplement to the
+	Astronomical Almanac", ISBN 0-935702-68-7.
 
-    Smith, C.A. et al., 1989, "The transformation of astrometric
-    catalog systems to the equinox J2000.0".  Astron.J. 97, 265.
+	Smith, C.A. et al., 1989, "The transformation of astrometric
+	catalog systems to the equinox J2000.0".  Astron.J. 97, 265.
 
-    Standish, E.M., 1982, "Conversion of positions and proper motions
-    from B1950.0 to the IAU system at J2000.0".  Astron.Astrophys.,
-    115, 1, 20-22.
+	Standish, E.M., 1982, "Conversion of positions and proper motions
+	from B1950.0 to the IAU system at J2000.0".  Astron.Astrophys.,
+	115, 1, 20-22.
 
-    Yallop, B.D. et al., 1989, "Transformation of mean star places
-    from FK4 B1950.0 to FK5 J2000.0 using matrices in 6-space".
-    Astron.J. 97, 274.
+	Yallop, B.D. et al., 1989, "Transformation of mean star places
+	from FK4 B1950.0 to FK5 J2000.0 using matrices in 6-space".
+	Astron.J. 97, 274.
 */
 func Fk425(r1950, d1950 float64, dr1950, dd1950 float64, p1950, v1950 float64,
 	r2000, d2000 *float64, dr2000, dd2000 *float64, p2000, v2000 *float64) {
@@ -215,28 +218,30 @@ the function requires the epoch at which the position in the FK4
 system was determined.
 
 Given:
-    r1950,d1950    float64   B1950.0 FK4 RA,Dec at epoch (rad)
-    bepoch         float64   Besselian epoch (e.g. 1979.3)
+
+	r1950,d1950    float64   B1950.0 FK4 RA,Dec at epoch (rad)
+	bepoch         float64   Besselian epoch (e.g. 1979.3)
 
 Returned:
-    r2000,d2000    float64   J2000.0 FK5 RA,Dec (rad)
+
+	r2000,d2000    float64   J2000.0 FK5 RA,Dec (rad)
 
 Notes:
 
- 1) The epoch bepoch is strictly speaking Besselian, but if a
+ 1. The epoch bepoch is strictly speaking Besselian, but if a
     Julian epoch is supplied the result will be affected only to a
     negligible extent.
 
- 2) The method is from Appendix 2 of Aoki et al. (1983), but using
+ 2. The method is from Appendix 2 of Aoki et al. (1983), but using
     the constants of Seidelmann (1992).  See the function Fk425
     for a general introduction to the FK4 to FK5 conversion.
 
- 3) Conversion from equinox B1950.0 FK4 to equinox J2000.0 FK5 only
+ 3. Conversion from equinox B1950.0 FK4 to equinox J2000.0 FK5 only
     is provided for.  Conversions for different starting and/or
     ending epochs would require additional treatment for precession,
     proper motion and E-terms.
 
- 4) In the FK4 catalog the proper motions of stars within 10 degrees
+ 4. In the FK4 catalog the proper motions of stars within 10 degrees
     of the poles do not embody differential E-terms effects and
     should, strictly speaking, be handled in a different manner from
     stars outside these regions.  However, given the general lack of
@@ -248,7 +253,7 @@ Notes:
     in past astrometry, and the undesirability of a discontinuity in
     the algorithm, the decision has been made in this SOFA algorithm
     to include the effects of differential E-terms on the proper
-    motions for all stars, whether polar or not.  At epoch 2000.0,
+    motions for all stars, whether polar or not. At epoch J2000.0,
     and measuring "on the sky" rather than in terms of RA change, the
     errors resulting from this simplification are less than
     1 milliarcsecond in position and 1 milliarcsecond per century in
@@ -256,24 +261,25 @@ Notes:
 
 References:
 
-    Aoki, S. et al., 1983, "Conversion matrix of epoch B1950.0
-    FK4-based positions of stars to epoch J2000.0 positions in
-    accordance with the new IAU resolutions".  Astron.Astrophys.
-    128, 263-267.
+	Aoki, S. et al., 1983, "Conversion matrix of epoch B1950.0
+	FK4-based positions of stars to epoch J2000.0 positions in
+	accordance with the new IAU resolutions".  Astron.Astrophys.
+	128, 263-267.
 
-    Seidelmann, P.K. (ed), 1992, "Explanatory Supplement to the
-    Astronomical Almanac", ISBN 0-935702-68-7.
+	Seidelmann, P.K. (ed), 1992, "Explanatory Supplement to the
+	Astronomical Almanac", ISBN 0-935702-68-7.
 
 Called:
-    Anp       normalize angle into range 0 to 2pi
-    C2s       p-vector to spherical
-    Epb2jd    Besselian epoch to Julian date
-    Epj       Julian date to Julian epoch
-    Pdp       scalar product of two p-vectors
-    Pmp       p-vector minus p-vector
-    Ppsp      p-vector plus scaled p-vector
-    Pvu       update a pv-vector
-    S2c       spherical to p-vector
+
+	Anp       normalize angle into range 0 to 2pi
+	C2s       p-vector to spherical
+	Epb2jd    Besselian epoch to Julian date
+	Epj       Julian date to Julian epoch
+	Pdp       scalar product of two p-vectors
+	Pmp       p-vector minus p-vector
+	Ppsp      p-vector plus scaled p-vector
+	Pvu       update a pv-vector
+	S2c       spherical to p-vector
 */
 func Fk45z(r1950, d1950, bepoch float64, r2000, d2000 *float64) {
 	/* Radians per year to arcsec per century */
@@ -343,23 +349,25 @@ func Fk45z(r1950, d1950, bepoch float64, r2000, d2000 *float64) {
 Fk524 Convert J2000.0 FK5 star catalog data to B1950.0 FK4
 
 Given: (all J2000.0, FK5)
-    r2000,d2000    float64   J2000.0 RA,Dec (rad)
-    dr2000,dd2000  float64   J2000.0 proper motions (rad/Jul.yr)
-    p2000          float64   parallax (arcsec)
-    v2000          float64   radial velocity (km/s, +ve = moving away)
+
+	r2000,d2000    float64   J2000.0 RA,Dec (rad)
+	dr2000,dd2000  float64   J2000.0 proper motions (rad/Jul.yr)
+	p2000          float64   parallax (arcsec)
+	v2000          float64   radial velocity (km/s, +ve = moving away)
 
 Returned: (all B1950.0, FK4)
-    r1950,d1950    float64   B1950.0 RA,Dec (rad)
-    dr1950,dd1950  float64   B1950.0 proper motions (rad/trop.yr)
-    p1950          float64   parallax (arcsec)
-    v1950          float64   radial velocity (km/s, +ve = moving away)
+
+	r1950,d1950    float64   B1950.0 RA,Dec (rad)
+	dr1950,dd1950  float64   B1950.0 proper motions (rad/trop.yr)
+	p1950          float64   parallax (arcsec)
+	v1950          float64   radial velocity (km/s, +ve = moving away)
 
 Notes:
 
- 1) The proper motions in RA are dRA/dt rather than cos(Dec)*dRA/dt,
+ 1. The proper motions in RA are dRA/dt rather than cos(Dec)*dRA/dt,
     and are per year rather than per century.
 
- 2) The conversion is somewhat complicated, for several reasons:
+ 2. The conversion is somewhat complicated, for several reasons:
 
     . Change of standard epoch from J2000.0 to B1950.0.
 
@@ -370,21 +378,21 @@ Notes:
     . Change of time unit for proper motion (Julian to tropical).
 
     . FK4 positions include the E-terms of aberration, to simplify
-      the hand computation of annual aberration.  FK5 positions
-      assume a rigorous aberration computation based on the Earth's
-      barycentric velocity.
+    the hand computation of annual aberration.  FK5 positions
+    assume a rigorous aberration computation based on the Earth's
+    barycentric velocity.
 
     . The E-terms also affect proper motions, and in particular cause
-      objects at large distances to exhibit fictitious proper
-      motions.
+    objects at large distances to exhibit fictitious proper
+    motions.
 
- 3) The algorithm is based on Smith et al. (1989) and Yallop et al.
+ 3. The algorithm is based on Smith et al. (1989) and Yallop et al.
     (1989), which presented a matrix method due to Standish (1982) as
     developed by Aoki et al. (1983), using Kinoshita's development of
     Andoyer's post-Newcomb precession.  The numerical constants from
     Seidelmann (1992) are used canonically.
 
- 4) In the FK4 catalog the proper motions of stars within 10 degrees
+ 4. In the FK4 catalog the proper motions of stars within 10 degrees
     of the poles do not embody differential E-terms effects and
     should, strictly speaking, be handled in a different manner from
     stars outside these regions.  However, given the general lack of
@@ -403,35 +411,36 @@ Notes:
     proper motion.
 
 Called:
-    Anp       normalize angle into range 0 to 2pi
-    Pdp       scalar product of two p-vectors
-    Pm        modulus of p-vector
-    Pmp       p-vector minus p-vector
-    Ppp       p-vector pluus p-vector
-    Pv2s      pv-vector to spherical coordinates
-    S2pv      spherical coordinates to pv-vector
-    Sxp       multiply p-vector by scalar
+
+	Anp       normalize angle into range 0 to 2pi
+	Pdp       scalar product of two p-vectors
+	Pm        modulus of p-vector
+	Pmp       p-vector minus p-vector
+	Ppp       p-vector pluus p-vector
+	Pv2s      pv-vector to spherical coordinates
+	S2pv      spherical coordinates to pv-vector
+	Sxp       multiply p-vector by scalar
 
 References:
 
-    Aoki, S. et al., 1983, "Conversion matrix of epoch B1950.0
-    FK4-based positions of stars to epoch J2000.0 positions in
-    accordance with the new IAU resolutions".  Astron.Astrophys.
-    128, 263-267.
+	Aoki, S. et al., 1983, "Conversion matrix of epoch B1950.0
+	FK4-based positions of stars to epoch J2000.0 positions in
+	accordance with the new IAU resolutions".  Astron.Astrophys.
+	128, 263-267.
 
-    Seidelmann, P.K. (ed), 1992, "Explanatory Supplement to the
-    Astronomical Almanac", ISBN 0-935702-68-7.
+	Seidelmann, P.K. (ed), 1992, "Explanatory Supplement to the
+	Astronomical Almanac", ISBN 0-935702-68-7.
 
-    Smith, C.A. et al., 1989, "The transformation of astrometric
-    catalog systems to the equinox J2000.0".  Astron.J. 97, 265.
+	Smith, C.A. et al., 1989, "The transformation of astrometric
+	catalog systems to the equinox J2000.0".  Astron.J. 97, 265.
 
-    Standish, E.M., 1982, "Conversion of positions and proper motions
-    from B1950.0 to the IAU system at J2000.0".  Astron.Astrophys.,
-    115, 1, 20-22.
+	Standish, E.M., 1982, "Conversion of positions and proper motions
+	from B1950.0 to the IAU system at J2000.0".  Astron.Astrophys.,
+	115, 1, 20-22.
 
-    Yallop, B.D. et al., 1989, "Transformation of mean star places
-    from FK4 B1950.0 to FK5 J2000.0 using matrices in 6-space".
-    Astron.J. 97, 274.
+	Yallop, B.D. et al., 1989, "Transformation of mean star places
+	from FK4 B1950.0 to FK5 J2000.0 using matrices in 6-space".
+	Astron.J. 97, 274.
 */
 func Fk524(r2000, d2000 float64, dr2000, dd2000 float64, p2000, v2000 float64,
 	r1950, d1950 *float64, dr1950, dd1950 *float64, p1950, v1950 *float64) {
@@ -562,46 +571,49 @@ func Fk524(r2000, d2000 float64, dr2000, dd2000 float64, p2000, v2000 float64,
 Fk52h Transform FK5  (J2000.0) star data into the Hipparcos frame
 
 Given (all FK5, equinox J2000.0, epoch J2000.0):
-    r5      float64    RA (radians)
-    d5      float64    Dec (radians)
-    dr5     float64    proper motion in RA (dRA/dt, rad/Jyear)
-    dd5     float64    proper motion in Dec (dDec/dt, rad/Jyear)
-    px5     float64    parallax (arcsec)
-    rv5     float64    radial velocity (km/s, positive = receding)
+
+	r5      float64    RA (radians)
+	d5      float64    Dec (radians)
+	dr5     float64    proper motion in RA (dRA/dt, rad/Jyear)
+	dd5     float64    proper motion in Dec (dDec/dt, rad/Jyear)
+	px5     float64    parallax (arcsec)
+	rv5     float64    radial velocity (km/s, positive = receding)
 
 Returned (all Hipparcos, epoch J2000.0):
-    rh      float64    RA (radians)
-    dh      float64    Dec (radians)
-    drh     float64    proper motion in RA (dRA/dt, rad/Jyear)
-    ddh     float64    proper motion in Dec (dDec/dt, rad/Jyear)
-    pxh     float64    parallax (arcsec)
-    rvh     float64    radial velocity (km/s, positive = receding)
+
+	rh      float64    RA (radians)
+	dh      float64    Dec (radians)
+	drh     float64    proper motion in RA (dRA/dt, rad/Jyear)
+	ddh     float64    proper motion in Dec (dDec/dt, rad/Jyear)
+	pxh     float64    parallax (arcsec)
+	rvh     float64    radial velocity (km/s, positive = receding)
 
 Notes:
 
- 1) This function transforms FK5 star positions and proper motions
+ 1. This function transforms FK5 star positions and proper motions
     into the system of the Hipparcos catalog.
 
- 2) The proper motions in RA are dRA/dt rather than
+ 2. The proper motions in RA are dRA/dt rather than
     cos(Dec)*dRA/dt, and are per year rather than per century.
 
- 3) The FK5 to Hipparcos transformation is modeled as a pure
+ 3. The FK5 to Hipparcos transformation is modeled as a pure
     rotation and spin;  zonal errors in the FK5 catalog are not
     taken into account.
 
- 4) See also H2fk5, Fk5hz, Hfk5z.
+ 4. See also H2fk5, Fk5hz, Hfk5z.
 
 Called:
-    Starpv    star catalog data to space motion pv-vector
-    Fk5hip    FK5 to Hipparcos rotation and spin
-    Rxp       product of r-matrix and p-vector
-    Pxp       vector product of two p-vectors
-    Ppp       p-vector plus p-vector
-    Pvstar    space motion pv-vector to star catalog data
+
+	Starpv    star catalog data to space motion pv-vector
+	Fk5hip    FK5 to Hipparcos rotation and spin
+	Rxp       product of r-matrix and p-vector
+	Pxp       vector product of two p-vectors
+	Ppp       p-vector plus p-vector
+	Pvstar    space motion pv-vector to star catalog data
 
 Reference:
 
-    F.Mignard & M.Froeschle, Astron.Astrophys., 354, 732-739 (2000).
+	F.Mignard & M.Froeschle, Astron.Astrophys., 354, 732-739 (2000).
 */
 func Fk52h(r5, d5 float64, dr5, dd5, px5, rv5 float64,
 	rh, dh *float64, drh, ddh, pxh, rvh *float64) {
@@ -642,44 +654,47 @@ func Fk52h(r5, d5 float64, dr5, dd5, px5, rv5 float64,
 Fk54z Convert a J2000.0 FK5 star position to B1950.0 FK4, assuming zero proper motion in FK5 system and zero parallax
 
 Given:
-    r2000,d2000    float64   J2000.0 FK5 RA,Dec (rad)
-    bepoch         float64   Besselian epoch (e.g. 1950.0)
+
+	r2000,d2000    float64   J2000.0 FK5 RA,Dec (rad)
+	bepoch         float64   Besselian epoch (e.g. 1950.0)
 
 Returned:
-    r1950,d1950    float64   B1950.0 FK4 RA,Dec (rad) at epoch BEPOCH
-    dr1950,dd1950  float64   B1950.0 FK4 proper motions (rad/trop.yr)
+
+	r1950,d1950    float64   B1950.0 FK4 RA,Dec (rad) at epoch BEPOCH
+	dr1950,dd1950  float64   B1950.0 FK4 proper motions (rad/trop.yr)
 
 Notes:
 
- 1) In contrast to the Fk524 function, here the FK5 proper
+ 1. In contrast to the Fk524 function, here the FK5 proper
     motions, the parallax and the radial velocity are presumed zero.
 
- 2) This function converts a star position from the IAU 1976 FK5
-   (Fricke) system to the former FK4 (Bessel-Newcomb) system, for
+ 2. This function converts a star position from the IAU 1976 FK5
+    (Fricke) system to the former FK4 (Bessel-Newcomb) system, for
     cases such as distant radio sources where it is presumed there is
     zero parallax and no proper motion.  Because of the E-terms of
     aberration, such objects have (in general) non-zero proper motion
     in FK4, and the present function returns those fictitious proper
     motions.
 
- 3) Conversion from B1950.0 FK4 to J2000.0 FK5 only is provided for.
+ 3. Conversion from J2000.0 FK5 to B1950.0 FK4 only is provided for.
     Conversions involving other equinoxes would require additional
     treatment for precession.
 
- 4) The position returned by this function is in the B1950.0 FK4
+ 4. The position returned by this function is in the B1950.0 FK4
     reference system but at Besselian epoch BEPOCH.  For comparison
     with catalogs the BEPOCH argument will frequently be 1950.0. (In
     this context the distinction between Besselian and Julian epoch
     is insignificant.)
 
- 5) The RA component of the returned (fictitious) proper motion is
+ 5. The RA component of the returned (fictitious) proper motion is
     dRA/dt rather than cos(Dec)*dRA/dt.
 
 Called:
-    Anp       normalize angle into range 0 to 2pi
-    C2s       p-vector to spherical
-    Fk524     FK4 to FK5
-    S2c       spherical to p-vector
+
+	Anp       normalize angle into range 0 to 2pi
+	C2s       p-vector to spherical
+	Fk524     FK4 to FK5
+	S2c       spherical to p-vector
 */
 func Fk54z(r2000, d2000, bepoch float64, r1950, d1950 *float64, dr1950, dd1950 *float64) {
 	var r, d, pr, pd, px, rv, w float64
@@ -717,32 +732,34 @@ func Fk54z(r2000, d2000, bepoch float64, r1950, d1950 *float64, dr1950, dd1950 *
 Fk5hip FK5 orientation and spin with respect to Hipparcos
 
 Returned:
-    r5h   [3][3]float64  r-matrix: FK5 rotation wrt Hipparcos (Note 2)
-    s5h   [3]float64     r-vector: FK5 spin wrt Hipparcos (Note 3)
+
+	r5h   [3][3]float64  r-matrix: FK5 rotation wrt Hipparcos (Note 2)
+	s5h   [3]float64     r-vector: FK5 spin wrt Hipparcos (Note 3)
 
 Notes:
 
- 1) This function models the FK5 to Hipparcos transformation as a
+ 1. This function models the FK5 to Hipparcos transformation as a
     pure rotation and spin;  zonal errors in the FK5 catalogue are
     not taken into account.
 
- 2) The r-matrix r5h operates in the sense:
+ 2. The r-matrix r5h operates in the sense:
 
-          P_Hipparcos = r5h x P_FK5
+    P_Hipparcos = r5h x P_FK5
 
     where P_FK5 is a p-vector in the FK5 frame, and P_Hipparcos is
     the equivalent Hipparcos p-vector.
 
- 3) The r-vector s5h represents the time derivative of the FK5 to
+ 3. The r-vector s5h represents the time derivative of the FK5 to
     Hipparcos rotation.  The units are radians per year (Julian,
     TDB).
 
 Called:
-    Rv2m      r-vector to r-matrix
+
+	Rv2m      r-vector to r-matrix
 
 Reference:
 
-    F.Mignard & M.Froeschle, Astron.Astrophys., 354, 732-739 (2000).
+	F.Mignard & M.Froeschle, Astron.Astrophys., 354, 732-739 (2000).
 */
 func Fk5hip(r5h *[3][3]float64, s5h *[3]float64) {
 	var v [3]float64
@@ -780,33 +797,35 @@ Transform an FK5 (J2000.0) star position into the system of the
 Hipparcos catalogue, assuming zero Hipparcos proper motion.
 
 Given:
-    r5           float64   FK5 RA (radians), equinox J2000.0, at date
-    d5           float64   FK5 Dec (radians), equinox J2000.0, at date
-    date1,date2  float64   TDB date (Notes 1,2)
+
+	r5           float64   FK5 RA (radians), equinox J2000.0, at date
+	d5           float64   FK5 Dec (radians), equinox J2000.0, at date
+	date1,date2  float64   TDB date (Notes 1,2)
 
 Returned:
-    rh           float64   Hipparcos RA (radians)
-    dh           float64   Hipparcos Dec (radians)
+
+	rh           float64   Hipparcos RA (radians)
+	dh           float64   Hipparcos Dec (radians)
 
 Notes:
 
- 1) This function converts a star position from the FK5 system to
+ 1. This function converts a star position from the FK5 system to
     the Hipparcos system, in such a way that the Hipparcos proper
     motion is zero.  Because such a star has, in general, a non-zero
     proper motion in the FK5 system, the function requires the date
     at which the position in the FK5 system was determined.
 
- 2) The TT date date1+date2 is a Julian Date, apportioned in any
+ 2. The TT date date1+date2 is a Julian Date, apportioned in any
     convenient way between the two arguments.  For example,
     JD(TT)=2450123.7 could be expressed in any of these ways,
     among others:
 
-           date1          date2
+    date1          date2
 
-        2450123.7           0.0       (JD method)
-        2451545.0       -1421.3       (J2000 method)
-        2400000.5       50123.2       (MJD method)
-        2450123.5           0.2       (date & time method)
+    2450123.7           0.0       (JD method)
+    2451545.0       -1421.3       (J2000 method)
+    2400000.5       50123.2       (MJD method)
+    2450123.5           0.2       (date & time method)
 
     The JD method is the most natural and convenient to use in
     cases where the loss of several decimal digits of resolution
@@ -815,28 +834,29 @@ Notes:
     optimum resolution.  The MJD method and the date & time methods
     are both good compromises between resolution and convenience.
 
- 3) The FK5 to Hipparcos transformation is modeled as a pure
+ 3. The FK5 to Hipparcos transformation is modeled as a pure
     rotation and spin;  zonal errors in the FK5 catalogue are not
     taken into account.
 
- 4) The position returned by this function is in the Hipparcos
+ 4. The position returned by this function is in the Hipparcos
     reference system but at date date1+date2.
 
- 5) See also Fk52h, H2fk5, Hfk5z.
+ 5. See also Fk52h, H2fk5, Hfk5z.
 
 Called:
-    S2c       spherical coordinates to unit vector
-    Fk5hip    FK5 to Hipparcos rotation and spin
-    Sxp       multiply p-vector by scalar
-    Rv2m      r-vector to r-matrix
-    Trxp      product of transpose of r-matrix and p-vector
-    Pxp       vector product of two p-vectors
-    C2s       p-vector to spherical
-    Anp       normalize angle into range 0 to 2pi
+
+	S2c       spherical coordinates to unit vector
+	Fk5hip    FK5 to Hipparcos rotation and spin
+	Sxp       multiply p-vector by scalar
+	Rv2m      r-vector to r-matrix
+	Trxp      product of transpose of r-matrix and p-vector
+	Pxp       vector product of two p-vectors
+	C2s       p-vector to spherical
+	Anp       normalize angle into range 0 to 2pi
 
 Reference:
 
-    F.Mignard & M.Froeschle, 2000, Astron.Astrophys. 354, 732-739.
+	F.Mignard & M.Froeschle, 2000, Astron.Astrophys. 354, 732-739.
 */
 func Fk5hz(r5, d5 float64, date1, date2 float64, rh, dh *float64) {
 	var t, w float64
@@ -873,48 +893,51 @@ func Fk5hz(r5, d5 float64, date1, date2 float64, rh, dh *float64) {
 H2fk5 Transform Hipparcos star data into the FK5 (J2000.0) frame
 
 Given (all Hipparcos, epoch J2000.0):
-    rh      float64    RA (radians)
-    dh      float64    Dec (radians)
-    drh     float64    proper motion in RA (dRA/dt, rad/Jyear)
-    ddh     float64    proper motion in Dec (dDec/dt, rad/Jyear)
-    pxh     float64    parallax (arcsec)
-    rvh     float64    radial velocity (km/s, positive = receding)
+
+	rh      float64    RA (radians)
+	dh      float64    Dec (radians)
+	drh     float64    proper motion in RA (dRA/dt, rad/Jyear)
+	ddh     float64    proper motion in Dec (dDec/dt, rad/Jyear)
+	pxh     float64    parallax (arcsec)
+	rvh     float64    radial velocity (km/s, positive = receding)
 
 Returned (all FK5, equinox J2000.0, epoch J2000.0):
-    r5      float64    RA (radians)
-    d5      float64    Dec (radians)
-    dr5     float64    proper motion in RA (dRA/dt, rad/Jyear)
-    dd5     float64    proper motion in Dec (dDec/dt, rad/Jyear)
-    px5     float64    parallax (arcsec)
-    rv5     float64    radial velocity (km/s, positive = receding)
+
+	r5      float64    RA (radians)
+	d5      float64    Dec (radians)
+	dr5     float64    proper motion in RA (dRA/dt, rad/Jyear)
+	dd5     float64    proper motion in Dec (dDec/dt, rad/Jyear)
+	px5     float64    parallax (arcsec)
+	rv5     float64    radial velocity (km/s, positive = receding)
 
 Notes:
 
- 1) This function transforms Hipparcos star positions and proper
+ 1. This function transforms Hipparcos star positions and proper
     motions into FK5 J2000.0.
 
- 2) The proper motions in RA are dRA/dt rather than
+ 2. The proper motions in RA are dRA/dt rather than
     cos(Dec)*dRA/dt, and are per year rather than per century.
 
- 3) The FK5 to Hipparcos transformation is modeled as a pure
+ 3. The FK5 to Hipparcos transformation is modeled as a pure
     rotation and spin;  zonal errors in the FK5 catalog are not
     taken into account.
 
- 4) See also Fk52h, Fk5hz, Hfk5z.
+ 4. See also Fk52h, Fk5hz, Hfk5z.
 
 Called:
-    Starpv    star catalog data to space motion pv-vector
-    Fk5hip    FK5 to Hipparcos rotation and spin
-    Rv2m      r-vector to r-matrix
-    Rxp       product of r-matrix and p-vector
-    Trxp      product of transpose of r-matrix and p-vector
-    Pxp       vector product of two p-vectors
-    Pmp       p-vector minus p-vector
-    Pvstar    space motion pv-vector to star catalog data
+
+	Starpv    star catalog data to space motion pv-vector
+	Fk5hip    FK5 to Hipparcos rotation and spin
+	Rv2m      r-vector to r-matrix
+	Rxp       product of r-matrix and p-vector
+	Trxp      product of transpose of r-matrix and p-vector
+	Pxp       vector product of two p-vectors
+	Pmp       p-vector minus p-vector
+	Pvstar    space motion pv-vector to star catalog data
 
 Reference:
 
-    F.Mignard & M.Froeschle, Astron.Astrophys., 354, 732-739 (2000).
+	F.Mignard & M.Froeschle, Astron.Astrophys., 354, 732-739 (2000).
 */
 func H2fk5(rh, dh float64, drh, ddh, pxh, rvh float64,
 	r5, d5 *float64, dr5, dd5, px5, rv5 *float64) {
@@ -961,29 +984,31 @@ Transform a Hipparcos star position into FK5 J2000.0, assuming
 zero Hipparcos proper motion.
 
 Given:
-    rh            float64    Hipparcos RA (radians)
-    dh            float64    Hipparcos Dec (radians)
-    date1,date2   float64    TDB date (Note 1)
+
+	rh            float64    Hipparcos RA (radians)
+	dh            float64    Hipparcos Dec (radians)
+	date1,date2   float64    TDB date (Note 1)
 
 Returned (all FK5, equinox J2000.0, date date1+date2):
-    r5            float64    RA (radians)
-    d5            float64    Dec (radians)
-    dr5           float64    FK5 RA proper motion (rad/year, Note 4)
-    dd5           float64    Dec proper motion (rad/year, Note 4)
+
+	r5            float64    RA (radians)
+	d5            float64    Dec (radians)
+	dr5           float64    FK5 RA proper motion (rad/year, Note 4)
+	dd5           float64    Dec proper motion (rad/year, Note 4)
 
 Notes:
 
- 1) The TT date date1+date2 is a Julian Date, apportioned in any
+ 1. The TT date date1+date2 is a Julian Date, apportioned in any
     convenient way between the two arguments.  For example,
     JD(TT)=2450123.7 could be expressed in any of these ways,
     among others:
 
-           date1          date2
+    date1          date2
 
-        2450123.7           0.0       (JD method)
-        2451545.0       -1421.3       (J2000 method)
-        2400000.5       50123.2       (MJD method)
-        2450123.5           0.2       (date & time method)
+    2450123.7           0.0       (JD method)
+    2451545.0       -1421.3       (J2000 method)
+    2400000.5       50123.2       (MJD method)
+    2450123.5           0.2       (date & time method)
 
     The JD method is the most natural and convenient to use in
     cases where the loss of several decimal digits of resolution
@@ -992,37 +1017,38 @@ Notes:
     optimum resolution.  The MJD method and the date & time methods
     are both good compromises between resolution and convenience.
 
- 2) The proper motion in RA is dRA/dt rather than cos(Dec)*dRA/dt.
+ 2. The proper motion in RA is dRA/dt rather than cos(Dec)*dRA/dt.
 
- 3) The FK5 to Hipparcos transformation is modeled as a pure rotation
+ 3. The FK5 to Hipparcos transformation is modeled as a pure rotation
     and spin;  zonal errors in the FK5 catalogue are not taken into
     account.
 
- 4) It was the intention that Hipparcos should be a close
+ 4. It was the intention that Hipparcos should be a close
     approximation to an inertial frame, so that distant objects have
     zero proper motion;  such objects have (in general) non-zero
     proper motion in FK5, and this function returns those fictitious
     proper motions.
 
- 5) The position returned by this function is in the FK5 J2000.0
+ 5. The position returned by this function is in the FK5 J2000.0
     reference system but at date date1+date2.
 
- 6) See also Fk52h, H2fk5, Fk5zhz.
+ 6. See also Fk52h, H2fk5, Fk5hz.
 
 Called:
-    S2c       spherical coordinates to unit vector
-    Fk5hip    FK5 to Hipparcos rotation and spin
-    Rxp       product of r-matrix and p-vector
-    Sxp       multiply p-vector by scalar
-    Rxr       product of two r-matrices
-    Trxp      product of transpose of r-matrix and p-vector
-    Pxp       vector product of two p-vectors
-    Pv2s      pv-vector to spherical
-    Anp       normalize angle into range 0 to 2pi
+
+	S2c       spherical coordinates to unit vector
+	Fk5hip    FK5 to Hipparcos rotation and spin
+	Rxp       product of r-matrix and p-vector
+	Sxp       multiply p-vector by scalar
+	Rxr       product of two r-matrices
+	Trxp      product of transpose of r-matrix and p-vector
+	Pxp       vector product of two p-vectors
+	Pv2s      pv-vector to spherical
+	Anp       normalize angle into range 0 to 2pi
 
 Reference:
 
-    F.Mignard & M.Froeschle, 2000, Astron.Astrophys. 354, 732-739.
+	F.Mignard & M.Froeschle, 2000, Astron.Astrophys. 354, 732-739.
 */
 func Hfk5z(rh, dh float64, date1, date2 float64, r5, d5, dr5, dd5 *float64) {
 	var t, w, r, v float64

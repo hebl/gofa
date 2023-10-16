@@ -889,8 +889,8 @@ Returned:
 Notes:
 
  1) The TT and UT1 dates tta+ttb and uta+utb are Julian Dates,
-    apportioned in any convenient way between the arguments uta and
-    utb.  For example, JD(UT1)=2450123.7 could be expressed in any of
+    apportioned in any convenient way between the two arguments.  For 
+	example, JD(UT1)=2450123.7 could be expressed in any of
     these ways, among others:
 
           uta            utb

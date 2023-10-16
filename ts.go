@@ -19,26 +19,29 @@ Format for output a 2-part Julian Date (or in the case of UTC a
 quasi-JD form that includes special provision for leap seconds).
 
 Given:
-    scale     string  time scale ID (Note 1)
-    ndp       int     resolution (Note 2)
-    d1,d2     float64  time as a 2-part Julian Date (Notes 3,4)
+
+	scale     string  time scale ID (Note 1)
+	ndp       int     resolution (Note 2)
+	d1,d2     float64  time as a 2-part Julian Date (Notes 3,4)
 
 Returned:
-    iy,im,id  int     year, month, day in Gregorian calendar (Note 5)
-    ihmsf     [4]int  hours, minutes, seconds, fraction (Note 1)
+
+	iy,im,id  int     year, month, day in Gregorian calendar (Note 5)
+	ihmsf     [4]int  hours, minutes, seconds, fraction (Note 1)
 
 Returned (function value):
-    int     status: +1 = dubious year (Note 5)
-                     0 = OK
-                    -1 = unacceptable date (Note 6)
+
+	int     status: +1 = dubious year (Note 5)
+	                 0 = OK
+	                -1 = unacceptable date (Note 6)
 
 Notes:
 
- 1) scale identifies the time scale.  Only the value "UTC" (in upper
+ 1. scale identifies the time scale.  Only the value "UTC" (in upper
     case) is significant, and enables handling of leap seconds (see
     Note 4).
 
- 2) ndp is the number of decimal places in the seconds field, and can
+ 2. ndp is the number of decimal places in the seconds field, and can
     have negative as well as positive values, such as:
 
     ndp         resolution
@@ -46,20 +49,20 @@ Notes:
     -3            0 10 00
     -2            0 01 00
     -1            0 00 10
-     0            0 00 01
-     1            0 00 00.1
-     2            0 00 00.01
-     3            0 00 00.001
+    0            0 00 01
+    1            0 00 00.1
+    2            0 00 00.01
+    3            0 00 00.001
 
     The limits are platform dependent, but a safe range is -5 to +9.
 
- 3) d1+d2 is Julian Date, apportioned in any convenient way between
+ 3. d1+d2 is Julian Date, apportioned in any convenient way between
     the two arguments, for example where d1 is the Julian Day Number
     and d2 is the fraction of a day.  In the case of UTC, where the
     use of JD is problematical, special conventions apply:  see the
     next note.
 
- 4) JD cannot unambiguously represent UTC during a leap second unless
+ 4. JD cannot unambiguously represent UTC during a leap second unless
     special measures are taken.  The SOFA internal convention is that
     the quasi-JD day represents UTC days whether the length is 86399,
     86400 or 86401 SI seconds.  In the 1960-1972 era there were
@@ -67,16 +70,17 @@ Notes:
     expression was changed, and these "mini-leaps" are also included
     in the SOFA convention.
 
- 5) The warning status "dubious year" flags UTCs that predate the
+ 5. The warning status "dubious year" flags UTCs that predate the
     introduction of the time scale or that are too far in the future
     to be trusted.  See Dat for further details.
 
- 6) For calendar conventions and limitations, see Cal2jd.
+ 6. For calendar conventions and limitations, see Cal2jd.
 
 Called:
-    Jd2cal    JD to Gregorian calendar
-    D2tf      decompose days to hms
-    Dat       delta(AT) = TAI-UTC
+
+	Jd2cal    JD to Gregorian calendar
+	D2tf      decompose days to hms
+	Dat       delta(AT) = TAI-UTC
 */
 func D2dtf(scale string, ndp int, d1, d2 float64, iy, im, id *int, ihmsf *[4]int) int {
 	var leap bool
@@ -212,40 +216,43 @@ of UTC a quasi-JD form that includes special provision for leap
 seconds).
 
 Given:
-    scale     string   time scale ID (Note 1)
-    iy,im,id  int      year, month, day in Gregorian calendar (Note 2)
-    ihr,imn   int      hour, minute
-    sec       float64  seconds
+
+	scale     string   time scale ID (Note 1)
+	iy,im,id  int      year, month, day in Gregorian calendar (Note 2)
+	ihr,imn   int      hour, minute
+	sec       float64  seconds
 
 Returned:
-    d1,d2     float64  2-part Julian Date (Notes 3,4)
+
+	d1,d2     float64  2-part Julian Date (Notes 3,4)
 
 Returned (function value):
-    int     status: +3 = both of next two
-                    +2 = time is after end of day (Note 5)
-                    +1 = dubious year (Note 6)
-                     0 = OK
-                    -1 = bad year
-                    -2 = bad month
-                    -3 = bad day
-                    -4 = bad hour
-                    -5 = bad minute
-                    -6 = bad second (<0)
+
+	int     status: +3 = both of next two
+	                +2 = time is after end of day (Note 5)
+	                +1 = dubious year (Note 6)
+	                 0 = OK
+	                -1 = bad year
+	                -2 = bad month
+	                -3 = bad day
+	                -4 = bad hour
+	                -5 = bad minute
+	                -6 = bad second (<0)
 
 Notes:
 
- 1) scale identifies the time scale.  Only the value "UTC" (in upper
+ 1. scale identifies the time scale.  Only the value "UTC" (in upper
     case) is significant, and enables handling of leap seconds (see
     Note 4).
 
- 2) For calendar conventions and limitations, see Cal2jd.
+ 2. For calendar conventions and limitations, see Cal2jd.
 
- 3) The sum of the results, d1+d2, is Julian Date, where normally d1
+ 3. The sum of the results, d1+d2, is Julian Date, where normally d1
     is the Julian Day Number and d2 is the fraction of a day.  In the
     case of UTC, where the use of JD is problematical, special
     conventions apply:  see the next note.
 
- 4) JD cannot unambiguously represent UTC during a leap second unless
+ 4. JD cannot unambiguously represent UTC during a leap second unless
     special measures are taken.  The SOFA internal convention is that
     the quasi-JD day represents UTC days whether the length is 86399,
     86400 or 86401 SI seconds.  In the 1960-1972 era there were
@@ -253,16 +260,16 @@ Notes:
     expression was changed, and these "mini-leaps" are also included
     in the SOFA convention.
 
- 5) The warning status "time is after end of day" usually means that
+ 5. The warning status "time is after end of day" usually means that
     the sec argument is greater than 60.0.  However, in a day ending
     in a leap second the limit changes to 61.0 (or 59.0 in the case
     of a negative leap second).
 
- 6) The warning status "dubious year" flags UTCs that predate the
+ 6. The warning status "dubious year" flags UTCs that predate the
     introduction of the time scale or that are too far in the future
     to be trusted.  See Dat for further details.
 
- 7) Only in the case of continuous and regular time scales (TAI, TT,
+ 7. Only in the case of continuous and regular time scales (TAI, TT,
     TCG, TCB and TDB) is the result d1+d2 a Julian Date, strictly
     speaking.  In the other cases (UT1 and UTC) the result must be
     used with circumspection;  in particular the difference between
@@ -270,9 +277,10 @@ Notes:
     interval.
 
 Called:
-    Cal2jd    Gregorian calendar to JD
-    Dat       delta(AT) = TAI-UTC
-    Jd2cal    JD to Gregorian calendar
+
+	Cal2jd    Gregorian calendar to JD
+	Dat       delta(AT) = TAI-UTC
+	Jd2cal    JD to Gregorian calendar
 */
 func Dtf2d(scale string, iy, im, id, ihr, imn int, sec float64, d1, d2 *float64) int {
 	var js, iy2, im2, id2 int
@@ -362,60 +370,63 @@ Dat		Delta(AT) (=TAI-UTC) for a given UTC date
 
 For a given UTC date, calculate Delta(AT) = TAI-UTC.
 
-    :------------------------------------------:
-    :                                          :
-    :                 IMPORTANT                :
-    :                                          :
-    :  A new version of this function must be  :
-    :  produced whenever a new leap second is  :
-    :  announced.  There are four items to     :
-    :  change on each such occasion:           :
-    :                                          :
-    :  1) A new line must be added to the set  :
-    :     of statements that initialize the    :
-    :     array "changes".                     :
-    :                                          :
-    :  2) The constant IYV must be set to the  :
-    :     current year.                        :
-    :                                          :
-    :  3) The "Latest leap second" comment     :
-    :     below must be set to the new leap    :
-    :     second date.                         :
-    :                                          :
-    :  4) The "This revision" comment, later,  :
-    :     must be set to the current date.     :
-    :                                          :
-    :  Change (2) must also be carried out     :
-    :  whenever the function is re-issued,     :
-    :  even if no leap seconds have been       :
-    :  added.                                  :
-    :                                          :
-    :  Latest leap second:  2016 December 31   :
-    :                                          :
-    :__________________________________________:
+	:------------------------------------------:
+	:                                          :
+	:                 IMPORTANT                :
+	:                                          :
+	:  A new version of this function must be  :
+	:  produced whenever a new leap second is  :
+	:  announced.  There are four items to     :
+	:  change on each such occasion:           :
+	:                                          :
+	:  1) A new line must be added to the set  :
+	:     of statements that initialize the    :
+	:     array "changes".                     :
+	:                                          :
+	:  2) The constant IYV must be set to the  :
+	:     current year.                        :
+	:                                          :
+	:  3) The "Latest leap second" comment     :
+	:     below must be set to the new leap    :
+	:     second date.                         :
+	:                                          :
+	:  4) The "This revision" comment, later,  :
+	:     must be set to the current date.     :
+	:                                          :
+	:  Change (2) must also be carried out     :
+	:  whenever the function is re-issued,     :
+	:  even if no leap seconds have been       :
+	:  added.                                  :
+	:                                          :
+	:  Latest leap second:  2016 December 31   :
+	:                                          :
+	:__________________________________________:
 
 Given:
-    iy     int       UTC:  year (Notes 1 and 2)
-    im     int             month (Note 2)
-    id     int             day (Notes 2 and 3)
-    fd     float64         fraction of day (Note 4)
+
+	iy     int       UTC:  year (Notes 1 and 2)
+	im     int             month (Note 2)
+	id     int             day (Notes 2 and 3)
+	fd     float64         fraction of day (Note 4)
 
 Returned:
-    deltat float64   TAI minus UTC, seconds
+
+	deltat float64   TAI minus UTC, seconds
 
 Returned (function value):
-    int      status (Note 5):
-              1 = dubious year (Note 1)
-              0 = OK
-             -1 = bad year
-             -2 = bad month
-             -3 = bad day (Note 3)
-             -4 = bad fraction (Note 4)
-             -5 = internal error (Note 5)
+
+	int      status (Note 5):
+	          1 = dubious year (Note 1)
+	          0 = OK
+	         -1 = bad year
+	         -2 = bad month
+	         -3 = bad day (Note 3)
+	         -4 = bad fraction (Note 4)
+	         -5 = internal error (Note 5)
 
 Notes:
 
- 1) UTC began at 1960 January 1.0 (JD 2436934.5) and it is improper
+ 1. UTC began at 1960 January 1.0 (JD 2436934.5) and it is improper
     to call the function with an earlier date.  If this is attempted,
     zero is returned together with a warning status.
 
@@ -430,18 +441,18 @@ Notes:
     This is distinct from the error status -1, which signifies a year
     so early that JD could not be computed.
 
- 2) If the specified date is for a day which ends with a leap second,
+ 2. If the specified date is for a day which ends with a leap second,
     the TAI-UTC value returned is for the period leading up to the
     leap second.  If the date is for a day which begins as a leap
     second ends, the TAI-UTC returned is for the period following the
     leap second.
 
- 3) The day number must be in the normal calendar range, for example
+ 3. The day number must be in the normal calendar range, for example
     1 through 30 for April.  The "almanac" convention of allowing
     such dates as January 0 and December 32 is not supported in this
     function, in order to avoid confusion near leap seconds.
 
- 4) The fraction of day is used only for dates before the
+ 4. The fraction of day is used only for dates before the
     introduction of leap seconds, the first of which occurred at the
     end of 1971.  It is tested for validity (0 to 1 is the valid
     range) even if not used;  if invalid, zero is used and status -4
@@ -449,29 +460,30 @@ Notes:
     acceptable;  the resulting error is always less than 3 ms (and
     occurs only pre-1972).
 
- 5) The status value returned in the case where there are multiple
+ 5. The status value returned in the case where there are multiple
     errors refers to the first error detected.  For example, if the
     month and day are 13 and 32 respectively, status -2 (bad month)
     will be returned.  The "internal error" status refers to a
     case that is impossible but causes some compilers to issue a
     warning.
 
- 6) In cases where a valid result is not available, zero is returned.
+ 6. In cases where a valid result is not available, zero is returned.
 
 References:
 
- 1) For dates from 1961 January 1 onwards, the expressions from the
+ 1. For dates from 1961 January 1 onwards, the expressions from the
     file ftp://maia.usno.navy.mil/ser7/tai-utc.dat are used.
 
- 2) The 5ms timestep at 1961 January 1 is taken from 2.58.1 (p87) of
+ 2. The 5ms timestep at 1961 January 1 is taken from 2.58.1 (p87) of
     the 1992 Explanatory Supplement.
 
 Called:
-    Cal2jd    Gregorian calendar to JD
+
+	Cal2jd    Gregorian calendar to JD
 */
 func Dat(iy, im, id int, fd float64, deltat *float64) int {
 	/* Release year for this version of Dat */
-	const IYV = 2021
+	const IYV = 2023
 
 	/* Reference dates (MJD) and drift rates (s/day), pre leap seconds */
 	drift := [...][2]float64{
@@ -620,56 +632,58 @@ dynamical time and terrestrial time, for an observer on the Earth.
 The different time scales - proper, coordinate and realized - are
 related to each other:
 
-           TAI             <-  physically realized
-            :
-         offset            <-  observed (nominally +32.184s)
-            :
-           TT              <-  terrestrial time
-            :
-   rate adjustment (L_G)   <-  definition of TT
-            :
-           TCG             <-  time scale for GCRS
-            :
-     "periodic" terms      <-  Dtdb  is an implementation
-            :
-   rate adjustment (L_C)   <-  function of solar-system ephemeris
-            :
-           TCB             <-  time scale for BCRS
-            :
-   rate adjustment (-L_B)  <-  definition of TDB
-            :
-           TDB             <-  TCB scaled to track TT
-            :
-     "periodic" terms      <-  -Dtdb is an approximation
-            :
-           TT              <-  terrestrial time
+	        TAI             <-  physically realized
+	         :
+	      offset            <-  observed (nominally +32.184s)
+	         :
+	        TT              <-  terrestrial time
+	         :
+	rate adjustment (L_G)   <-  definition of TT
+	         :
+	        TCG             <-  time scale for GCRS
+	         :
+	  "periodic" terms      <-  Dtdb  is an implementation
+	         :
+	rate adjustment (L_C)   <-  function of solar-system ephemeris
+	         :
+	        TCB             <-  time scale for BCRS
+	         :
+	rate adjustment (-L_B)  <-  definition of TDB
+	         :
+	        TDB             <-  TCB scaled to track TT
+	         :
+	  "periodic" terms      <-  -Dtdb is an approximation
+	         :
+	        TT              <-  terrestrial time
 
 Adopted values for the various constants can be found in the IERS
 Conventions (McCarthy & Petit 2003).
 
 Given:
-    date1,date2   float64  date, TDB (Notes 1-3)
-    ut            float64  universal time (UT1, fraction of one day)
-    elong         float64  longitude (east positive, radians)
-    u             float64  distance from Earth spin axis (km)
-    v             float64  distance north of equatorial plane (km)
+
+	date1,date2   float64  date, TDB (Notes 1-3)
+	ut            float64  universal time (UT1, fraction of one day)
+	elong         float64  longitude (east positive, radians)
+	u             float64  distance from Earth spin axis (km)
+	v             float64  distance north of equatorial plane (km)
 
 Returned (function value):
-                  float64  TDB-TT (seconds)
+
+	float64  TDB-TT (seconds)
 
 Notes:
 
- 1) The date date1+date2 is a Julian Date, apportioned in any
+ 1. The date date1+date2 is a Julian Date, apportioned in any
     convenient way between the two arguments.  For example,
     JD(TT)=2450123.7 could be expressed in any of these ways,
     among others:
 
-           date1          date2
+    date1          date2
 
-        2450123.7           0.0       (JD method)
-        2451545.0       -1421.3       (J2000 method)
-        2400000.5       50123.2       (MJD method)
-        2450123.5           0.2       (date & time method)
+    2450123.7           0.0       (JD method)
+    2451545.0       -1421.3       (J2000 method)
+    2400000.5       50123.2       (MJD method)
+    2450123.5           0.2       (date & time method)
 
     The JD method is the most natural and convenient to use in
     cases where the loss of several decimal digits of resolution
@@ -682,17 +696,17 @@ Notes:
     the terrestrial dynamical time (TT) can be used with no practical
     effect on the accuracy of the prediction.
 
- 2) TT can be regarded as a coordinate time that is realized as an
+ 2. TT can be regarded as a coordinate time that is realized as an
     offset of 32.184s from International Atomic Time, TAI.  TT is a
     specific linear transformation of geocentric coordinate time TCG,
     which is the time scale for the Geocentric Celestial Reference
     System, GCRS.
 
- 3) TDB is a coordinate time, and is a specific linear transformation
+ 3. TDB is a coordinate time, and is a specific linear transformation
     of barycentric coordinate time TCB, which is the time scale for
     the Barycentric Celestial Reference System, BCRS.
 
- 4) The difference TCG-TCB depends on the masses and positions of the
+ 4. The difference TCG-TCB depends on the masses and positions of the
     bodies of the solar system and the velocity of the Earth.  It is
     dominated by a rate difference, the residual being of a periodic
     character.  The latter, which is modeled by the present function,
@@ -704,7 +718,7 @@ Notes:
     surface) experiences variations in speed (with respect to the
     BCRS) and gravitational potential.
 
- 5) TDB can be regarded as the same as TCB but with a rate adjustment
+ 5. TDB can be regarded as the same as TCB but with a rate adjustment
     to keep it close to TT, which is convenient for many applications.
     The history of successive attempts to define TDB is set out in
     Resolution 3 adopted by the IAU General Assembly in 2006, which
@@ -714,10 +728,11 @@ Notes:
     could introduce a linear drift between TDB and TT;  however, any
     such drift is unlikely to exceed 1 nanosecond per century.
 
- 6) The geocentric TDB-TT model used in the present function is that of
+ 6. The geocentric TDB-TT model used in the present function is that of
     Fairhead & Bretagnon (1990), in its full form.  It was originally
     supplied by Fairhead (private communications with P.T.Wallace,
-    1990) as a Fortran subroutine.  The present C function contains an
+
+ 1990. as a Fortran subroutine.  The present C function contains an
     adaptation of the Fairhead code.  The numerical results are
     essentially unaffected by the changes, the differences with
     respect to the Fairhead & Bretagnon original being at the 1e-20 s
@@ -734,35 +749,35 @@ Notes:
     model can be nullified, and the function will return the Fairhead
     & Bretagnon result alone.
 
- 7) During the interval 1950-2050, the absolute accuracy is better
+ 7. During the interval 1950-2050, the absolute accuracy is better
     than +/- 3 nanoseconds relative to time ephemerides obtained by
     direct numerical integrations based on the JPL DE405 solar system
     ephemeris.
 
- 8) It must be stressed that the present function is merely a model,
+ 8. It must be stressed that the present function is merely a model,
     and that numerical integration of solar-system ephemerides is the
     definitive method for predicting the relationship between TCG and
     TCB and hence between TT and TDB.
 
 References:
 
-    Fairhead, L., & Bretagnon, P., Astron.Astrophys., 229, 240-247
-    (1990).
+	Fairhead, L., & Bretagnon, P., Astron.Astrophys., 229, 240-247
+	(1990).
 
-    IAU 2006 Resolution 3.
+	IAU 2006 Resolution 3.
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    Moyer, T.D., Cel.Mech., 23, 33 (1981).
+	Moyer, T.D., Cel.Mech., 23, 33 (1981).
 
-    Murray, C.A., Vectorial Astrometry, Adam Hilger (1983).
+	Murray, C.A., Vectorial Astrometry, Adam Hilger (1983).
 
-    Seidelmann, P.K. et al., Explanatory Supplement to the
-    Astronomical Almanac, Chapter 2, University Science Books (1992).
+	Seidelmann, P.K. et al., Explanatory Supplement to the
+	Astronomical Almanac, Chapter 2, University Science Books (1992).
 
-    Simon, J.L., Bretagnon, P., Chapront, J., Chapront-Touze, M.,
-    Francou, G. & Laskar, J., Astron.Astrophys., 282, 663-683 (1994).
+	Simon, J.L., Bretagnon, P., Chapront, J., Chapront-Touze, M.,
+	Francou, G. & Laskar, J., Astron.Astrophys., 282, 663-683 (1994).
 */
 func Dtdb(date1, date2 float64, ut, elong, u, v float64) float64 {
 	var t, tsol, w, elsun, emsun, d, elj, els, wt, w0, w1, w2, w3, w4,
@@ -1769,28 +1784,31 @@ Time scale transformation:  International Atomic Time, TAI, to
 Terrestrial Time, TT.
 
 Given:
-    tai1,tai2  float64    TAI as a 2-part Julian Date
+
+	tai1,tai2  float64    TAI as a 2-part Julian Date
 
 Returned:
-    tt1,tt2    float64    TT as a 2-part Julian Date
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Note:
 
-    tai1+tai2 is Julian Date, apportioned in any convenient way
-    between the two arguments, for example where tai1 is the Julian
-    Day Number and tai2 is the fraction of a day.  The returned
-    tt1,tt2 follow suit.
+	tai1+tai2 is Julian Date, apportioned in any convenient way
+	between the two arguments, for example where tai1 is the Julian
+	Day Number and tai2 is the fraction of a day.  The returned
+	tt1,tt2 follow suit.
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Taitt(tai1, tai2 float64, tt1, tt2 *float64) int {
 	/* TT minus TAI (days). */
@@ -1816,29 +1834,32 @@ Time scale transformation:  International Atomic Time, TAI, to
 Universal Time, UT1.
 
 Given:
-    tai1,tai2  float64    TAI as a 2-part Julian Date
-    dta        float64    UT1-TAI in seconds
+
+	tai1,tai2  float64    TAI as a 2-part Julian Date
+	dta        float64    UT1-TAI in seconds
 
 Returned:
-    ut11,ut12  float64    UT1 as a 2-part Julian Date
+
+	ut11,ut12  float64    UT1 as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) tai1+tai2 is Julian Date, apportioned in any convenient way
+ 1. tai1+tai2 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where tai1 is the Julian
     Day Number and tai2 is the fraction of a day.  The returned
     UT11,UT12 follow suit.
 
- 2) The argument dta, i.e. UT1-TAI, is an observed quantity, and is
+ 2. The argument dta, i.e. UT1-TAI, is an observed quantity, and is
     available from IERS tabulations.
 
 Reference:
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Taiut1(tai1, tai2, dta float64, ut11, ut12 *float64) int {
 	var dtad float64
@@ -1864,26 +1885,29 @@ Time scale transformation:  International Atomic Time, TAI, to
 Coordinated Universal Time, UTC.
 
 Given:
-    tai1,tai2  float64   TAI as a 2-part Julian Date (Note 1)
+
+	tai1,tai2  float64   TAI as a 2-part Julian Date (Note 1)
 
 Returned:
-    utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 1-3)
+
+	utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 1-3)
 
 Returned (function value):
-    int      status: +1 = dubious year (Note 4)
-                      0 = OK
-                     -1 = unacceptable date
+
+	int      status: +1 = dubious year (Note 4)
+	                  0 = OK
+	                 -1 = unacceptable date
 
 Notes:
 
- 1) tai1+tai2 is Julian Date, apportioned in any convenient way
+ 1. tai1+tai2 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where tai1 is the Julian
     Day Number and tai2 is the fraction of a day.  The returned utc1
     and utc2 form an analogous pair, except that a special convention
     is used, to deal with the problem of leap seconds - see the next
     note.
 
- 2) JD cannot unambiguously represent UTC during a leap second unless
+ 2. JD cannot unambiguously represent UTC during a leap second unless
     special measures are taken.  The convention in the present
     function is that the JD day represents UTC days whether the
     length is 86399, 86400 or 86401 SI seconds.  In the 1960-1972 era
@@ -1891,24 +1915,25 @@ Notes:
     linear UTC(TAI) expression was changed, and these "mini-leaps"
     are also included in the SOFA convention.
 
- 3) The function D2dtf can be used to transform the UTC quasi-JD
+ 3. The function D2dtf can be used to transform the UTC quasi-JD
     into calendar date and clock time, including UTC leap second
     handling.
 
- 4) The warning status "dubious year" flags UTCs that predate the
+ 4. The warning status "dubious year" flags UTCs that predate the
     introduction of the time scale or that are too far in the future
     to be trusted.  See Dat for further details.
 
 Called:
-    Utctai    UTC to TAI
+
+	Utctai    UTC to TAI
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Taiutc(tai1, tai2 float64, utc1, utc2 *float64) int {
 	var big1 bool
@@ -1963,22 +1988,25 @@ Time scale transformation:  Barycentric Coordinate Time, TCB, to
 Barycentric Dynamical Time, TDB.
 
 Given:
-    tcb1,tcb2  float64    TCB as a 2-part Julian Date
+
+	tcb1,tcb2  float64    TCB as a 2-part Julian Date
 
 Returned:
-    tdb1,tdb2  float64    TDB as a 2-part Julian Date
+
+	tdb1,tdb2  float64    TDB as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) tcb1+tcb2 is Julian Date, apportioned in any convenient way
+ 1. tcb1+tcb2 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where tcb1 is the Julian
     Day Number and tcb2 is the fraction of a day.  The returned
     tdb1,tdb2 follow suit.
 
- 2) The 2006 IAU General Assembly introduced a conventional linear
+ 2. The 2006 IAU General Assembly introduced a conventional linear
     transformation between TDB and TCB.  This transformation
     compensates for the drift between TCB and terrestrial time TT,
     and keeps TDB approximately centered on TT.  Because the
@@ -1993,12 +2021,12 @@ Notes:
     these difficulties whilst delivering a TDB that in practice was
     consistent with values before that date.
 
- 3) TDB is essentially the same as Teph, the time argument for the
+ 3. TDB is essentially the same as Teph, the time argument for the
     JPL solar system ephemerides.
 
 Reference:
 
-    IAU 2006 Resolution B3
+	IAU 2006 Resolution B3
 */
 func Tcbtdb(tcb1, tcb2 float64, tdb1, tdb2 *float64) int {
 	/* 1977 Jan 1 00:00:32.184 TT, as two-part JD */
@@ -2032,27 +2060,30 @@ Time scale transformation:  Geocentric Coordinate Time, TCG, to
 Terrestrial Time, TT.
 
 Given:
-    tcg1,tcg2  float64    TCG as a 2-part Julian Date
+
+	tcg1,tcg2  float64    TCG as a 2-part Julian Date
 
 Returned:
-    tt1,tt2    float64    TT as a 2-part Julian Date
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
 
 Returned (function value):
-               int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Note:
 
-    tcg1+tcg2 is Julian Date, apportioned in any convenient way
-    between the two arguments, for example where tcg1 is the Julian
-    Day Number and tcg22 is the fraction of a day.  The returned
-    tt1,tt2 follow suit.
+	tcg1+tcg2 is Julian Date, apportioned in any convenient way
+	between the two arguments, for example where tcg1 is the Julian
+	Day Number and tcg22 is the fraction of a day.  The returned
+	tt1,tt2 follow suit.
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    IAU 2000 Resolution B1.9
+	IAU 2000 Resolution B1.9
 */
 func Tcgtt(tcg1, tcg2 float64, tt1, tt2 *float64) int {
 	/* 1977 Jan 1 00:00:32.184 TT, as MJD */
@@ -2078,22 +2109,25 @@ Time scale transformation:  Barycentric Dynamical Time, TDB, to
 Barycentric Coordinate Time, TCB.
 
 Given:
-    tdb1,tdb2  float64    TDB as a 2-part Julian Date
+
+	tdb1,tdb2  float64    TDB as a 2-part Julian Date
 
 Returned:
-    tcb1,tcb2  float64    TCB as a 2-part Julian Date
+
+	tcb1,tcb2  float64    TCB as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) tdb1+tdb2 is Julian Date, apportioned in any convenient way
+ 1. tdb1+tdb2 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where tdb1 is the Julian
     Day Number and tdb2 is the fraction of a day.  The returned
     tcb1,tcb2 follow suit.
 
- 2) The 2006 IAU General Assembly introduced a conventional linear
+ 2. The 2006 IAU General Assembly introduced a conventional linear
     transformation between TDB and TCB.  This transformation
     compensates for the drift between TCB and terrestrial time TT,
     and keeps TDB approximately centered on TT.  Because the
@@ -2108,12 +2142,12 @@ Notes:
     these difficulties whilst delivering a TDB that in practice was
     consistent with values before that date.
 
- 3) TDB is essentially the same as Teph, the time argument for the
+ 3. TDB is essentially the same as Teph, the time argument for the
     JPL solar system ephemerides.
 
 Reference:
 
-    IAU 2006 Resolution B3
+	IAU 2006 Resolution B3
 */
 func Tdbtcb(tdb1, tdb2 float64, tcb1, tcb2 *float64) int {
 	/* 1977 Jan 1 00:00:32.184 TT, as two-part JD */
@@ -2152,23 +2186,26 @@ Time scale transformation:  Barycentric Dynamical Time, TDB, to
 Terrestrial Time, TT.
 
 Given:
-    tdb1,tdb2  float64    TDB as a 2-part Julian Date
-    dtr        float64    TDB-TT in seconds
+
+	tdb1,tdb2  float64    TDB as a 2-part Julian Date
+	dtr        float64    TDB-TT in seconds
 
 Returned:
-    tt1,tt2    float64    TT as a 2-part Julian Date
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) tdb1+tdb2 is Julian Date, apportioned in any convenient way
+ 1. tdb1+tdb2 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where tdb1 is the Julian
     Day Number and tdb2 is the fraction of a day.  The returned
     tt1,tt2 follow suit.
 
- 2) The argument dtr represents the quasi-periodic component of the
+ 2. The argument dtr represents the quasi-periodic component of the
     GR transformation between TT and TCB.  It is dependent upon the
     adopted solar-system ephemeris, and can be obtained by numerical
     integration, by interrogating a precomputed time ephemeris or by
@@ -2176,15 +2213,15 @@ Notes:
     Dtdb.   The quantity is dominated by an annual term of 1.7 ms
     amplitude.
 
- 3) TDB is essentially the same as Teph, the time argument for the
+ 3. TDB is essentially the same as Teph, the time argument for the
     JPL solar system ephemerides.
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    IAU 2006 Resolution 3
+	IAU 2006 Resolution 3
 */
 func Tdbtt(tdb1, tdb2, dtr float64, tt1, tt2 *float64) int {
 	var dtrd float64
@@ -2210,28 +2247,31 @@ Time scale transformation:  Terrestrial Time, TT, to International
 Atomic Time, TAI.
 
 Given:
-    tt1,tt2    float64    TT as a 2-part Julian Date
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
 
 Returned:
-    tai1,tai2  float64    TAI as a 2-part Julian Date
+
+	tai1,tai2  float64    TAI as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Note:
 
-    tt1+tt2 is Julian Date, apportioned in any convenient way between
-    the two arguments, for example where tt1 is the Julian Day Number
-    and tt2 is the fraction of a day.  The returned tai1,tai2 follow
-    suit.
+	tt1+tt2 is Julian Date, apportioned in any convenient way between
+	the two arguments, for example where tt1 is the Julian Day Number
+	and tt2 is the fraction of a day.  The returned tai1,tai2 follow
+	suit.
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Tttai(tt1, tt2 float64, tai1, tai2 *float64) int {
 	/* TT minus TAI (days). */
@@ -2258,27 +2298,30 @@ Time scale transformation:  Terrestrial Time, TT, to Geocentric
 Coordinate Time, TCG.
 
 Given:
-    tt1,tt2    float64    TT as a 2-part Julian Date
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
 
 Returned:
-    tcg1,tcg2  float64    TCG as a 2-part Julian Date
+
+	tcg1,tcg2  float64    TCG as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Note:
 
-    tt1+tt2 is Julian Date, apportioned in any convenient way between
-    the two arguments, for example where tt1 is the Julian Day Number
-    and tt2 is the fraction of a day.  The returned tcg1,tcg2 follow
-    suit.
+	tt1+tt2 is Julian Date, apportioned in any convenient way between
+	the two arguments, for example where tt1 is the Julian Day Number
+	and tt2 is the fraction of a day.  The returned tcg1,tcg2 follow
+	suit.
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    IAU 2000 Resolution B1.9
+	IAU 2000 Resolution B1.9
 */
 func Tttcg(tt1, tt2 float64, tcg1, tcg2 *float64) int {
 	/* 1977 Jan 1 00:00:32.184 TT, as MJD */
@@ -2307,23 +2350,26 @@ Time scale transformation:  Terrestrial Time, TT, to Barycentric
 Dynamical Time, TDB.
 
 Given:
-    tt1,tt2    float64    TT as a 2-part Julian Date
-    dtr        float64    TDB-TT in seconds
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
+	dtr        float64    TDB-TT in seconds
 
 Returned:
-    tdb1,tdb2  float64    TDB as a 2-part Julian Date
+
+	tdb1,tdb2  float64    TDB as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) tt1+tt2 is Julian Date, apportioned in any convenient way between
+ 1. tt1+tt2 is Julian Date, apportioned in any convenient way between
     the two arguments, for example where tt1 is the Julian Day Number
     and tt2 is the fraction of a day.  The returned tdb1,tdb2 follow
     suit.
 
- 2) The argument dtr represents the quasi-periodic component of the
+ 2. The argument dtr represents the quasi-periodic component of the
     GR transformation between TT and TCB.  It is dependent upon the
     adopted solar-system ephemeris, and can be obtained by numerical
     integration, by interrogating a precomputed time ephemeris or by
@@ -2331,15 +2377,15 @@ Notes:
     Dtdb.   The quantity is dominated by an annual term of 1.7 ms
     amplitude.
 
- 3) TDB is essentially the same as Teph, the time argument for the JPL
+ 3. TDB is essentially the same as Teph, the time argument for the JPL
     solar system ephemerides.
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    IAU 2006 Resolution 3
+	IAU 2006 Resolution 3
 */
 func Tttdb(tt1, tt2, dtr float64, tdb1, tdb2 *float64) int {
 	var dtrd float64
@@ -2365,28 +2411,31 @@ Time scale transformation:  Terrestrial Time, TT, to Universal Time,
 UT1.
 
 Given:
-    tt1,tt2    float64    TT as a 2-part Julian Date
-    dt         float64    TT-UT1 in seconds
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
+	dt         float64    TT-UT1 in seconds
 
 Returned:
-    ut11,ut12  float64    UT1 as a 2-part Julian Date
+
+	ut11,ut12  float64    UT1 as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) tt1+tt2 is Julian Date, apportioned in any convenient way between
+ 1. tt1+tt2 is Julian Date, apportioned in any convenient way between
     the two arguments, for example where tt1 is the Julian Day Number
     and tt2 is the fraction of a day.  The returned ut11,ut12 follow
     suit.
 
- 2) The argument dt is classical Delta T.
+ 2. The argument dt is classical Delta T.
 
 Reference:
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Ttut1(tt1, tt2, dt float64, ut11, ut12 *float64) int {
 	var dtd float64
@@ -2412,29 +2461,32 @@ Time scale transformation:  Universal Time, UT1, to International
 Atomic Time, TAI.
 
 Given:
-    ut11,ut12  float64    UT1 as a 2-part Julian Date
-    dta        float64    UT1-TAI in seconds
+
+	ut11,ut12  float64    UT1 as a 2-part Julian Date
+	dta        float64    UT1-TAI in seconds
 
 Returned:
-    tai1,tai2  float64    TAI as a 2-part Julian Date
+
+	tai1,tai2  float64    TAI as a 2-part Julian Date
 
 Returned (function value):
-    int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) ut11+ut12 is Julian Date, apportioned in any convenient way
+ 1. ut11+ut12 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where ut11 is the Julian
     Day Number and ut12 is the fraction of a day.  The returned
     tai1,tai2 follow suit.
 
- 2) The argument dta, i.e. UT1-TAI, is an observed quantity, and is
+ 2. The argument dta, i.e. UT1-TAI, is an observed quantity, and is
     available from IERS tabulations.
 
 Reference:
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Ut1tai(ut11, ut12, dta float64, tai1, tai2 *float64) int {
 	var dtad float64
@@ -2460,28 +2512,31 @@ Time scale transformation:  Universal Time, UT1, to Terrestrial
 Time, TT.
 
 Given:
-    ut11,ut12  float64    UT1 as a 2-part Julian Date
-    dt         float64    TT-UT1 in seconds
+
+	ut11,ut12  float64    UT1 as a 2-part Julian Date
+	dt         float64    TT-UT1 in seconds
 
 Returned:
-    tt1,tt2    float64    TT as a 2-part Julian Date
+
+	tt1,tt2    float64    TT as a 2-part Julian Date
 
 Returned (function value):
-               int       status:  0 = OK
+
+	int       status:  0 = OK
 
 Notes:
 
- 1) ut11+ut12 is Julian Date, apportioned in any convenient way
+ 1. ut11+ut12 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where ut11 is the Julian
     Day Number and ut12 is the fraction of a day.  The returned
     tt1,tt2 follow suit.
 
- 2) The argument dt is classical Delta T.
+ 2. The argument dt is classical Delta T.
 
 Reference:
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Ut1tt(ut11, ut12, dt float64, tt1, tt2 *float64) int {
 	var dtd float64
@@ -2507,56 +2562,60 @@ Time scale transformation:  Universal Time, UT1, to Coordinated
 Universal Time, UTC.
 
 Given:
-    ut11,ut12  float64   UT1 as a 2-part Julian Date (Note 1)
-    dut1       float64   Delta UT1: UT1-UTC in seconds (Note 2)
+
+	ut11,ut12  float64   UT1 as a 2-part Julian Date (Note 1)
+	dut1       float64   Delta UT1: UT1-UTC in seconds (Note 2)
 
 Returned:
-    utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 3,4)
+
+	utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 3,4)
 
 Returned (function value):
-    int      status: +1 = dubious year (Note 5)
-                      0 = OK
-                     -1 = unacceptable date
+
+	int      status: +1 = dubious year (Note 5)
+	                  0 = OK
+	                 -1 = unacceptable date
 
 Notes:
 
- 1) ut11+ut12 is Julian Date, apportioned in any convenient way
+ 1. ut11+ut12 is Julian Date, apportioned in any convenient way
     between the two arguments, for example where ut11 is the Julian
     Day Number and ut12 is the fraction of a day.  The returned utc1
     and utc2 form an analogous pair, except that a special convention
     is used, to deal with the problem of leap seconds - see Note 3.
 
- 2) Delta UT1 can be obtained from tabulations provided by the
+ 2. Delta UT1 can be obtained from tabulations provided by the
     International Earth Rotation and Reference Systems Service.  The
     value changes abruptly by 1s at a leap second;  however, close to
     a leap second the algorithm used here is tolerant of the "wrong"
     choice of value being made.
 
- 3) JD cannot unambiguously represent UTC during a leap second unless
+ 3. JD cannot unambiguously represent UTC during a leap second unless
     special measures are taken.  The convention in the present
     function is that the returned quasi-JD UTC1+UTC2 represents UTC
     days whether the length is 86399, 86400 or 86401 SI seconds.
 
- 4) The function D2dtf can be used to transform the UTC quasi-JD
+ 4. The function D2dtf can be used to transform the UTC quasi-JD
     into calendar date and clock time, including UTC leap second
     handling.
 
- 5) The warning status "dubious year" flags UTCs that predate the
+ 5. The warning status "dubious year" flags UTCs that predate the
     introduction of the time scale or that are too far in the future
     to be trusted.  See Dat for further details.
 
 Called:
-    Jd2cal    JD to Gregorian calendar
-    Dat       delta(AT) = TAI-UTC
-    Cal2jd    Gregorian calendar to JD
+
+	Jd2cal    JD to Gregorian calendar
+	Dat       delta(AT) = TAI-UTC
+	Cal2jd    Gregorian calendar to JD
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Ut1utc(ut11, ut12, dut1 float64, utc1, utc2 *float64) int {
 	var big1 bool
@@ -2652,23 +2711,26 @@ Time scale transformation:  Coordinated Universal Time, UTC, to
 International Atomic Time, TAI.
 
 Given:
-    utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 1-4)
+
+	utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 1-4)
 
 Returned:
-    tai1,tai2  float64   TAI as a 2-part Julian Date (Note 5)
+
+	tai1,tai2  float64   TAI as a 2-part Julian Date (Note 5)
 
 Returned (function value):
-    int      status: +1 = dubious year (Note 3)
-                      0 = OK
-                     -1 = unacceptable date
+
+	int      status: +1 = dubious year (Note 3)
+	                  0 = OK
+	                 -1 = unacceptable date
 
 Notes:
 
- 1) utc1+utc2 is quasi Julian Date (see Note 2), apportioned in any
+ 1. utc1+utc2 is quasi Julian Date (see Note 2), apportioned in any
     convenient way between the two arguments, for example where utc1
     is the Julian Day Number and utc2 is the fraction of a day.
 
- 2) JD cannot unambiguously represent UTC during a leap second unless
+ 2. JD cannot unambiguously represent UTC during a leap second unless
     special measures are taken.  The convention in the present
     function is that the JD day represents UTC days whether the
     length is 86399, 86400 or 86401 SI seconds.  In the 1960-1972 era
@@ -2676,29 +2738,30 @@ Notes:
     linear UTC(TAI) expression was changed, and these "mini-leaps"
     are also included in the SOFA convention.
 
- 3) The warning status "dubious year" flags UTCs that predate the
+ 3. The warning status "dubious year" flags UTCs that predate the
     introduction of the time scale or that are too far in the future
     to be trusted.  See Dat for further details.
 
- 4) The function Dtf2d converts from calendar date and time of day
+ 4. The function Dtf2d converts from calendar date and time of day
     into 2-part Julian Date, and in the case of UTC implements the
     leap-second-ambiguity convention described above.
 
- 5) The returned TAI1,TAI2 are such that their sum is the TAI Julian
+ 5. The returned TAI1,TAI2 are such that their sum is the TAI Julian
     Date.
 
 Called:
-    Jd2cal    JD to Gregorian calendar
-    Dat       delta(AT) = TAI-UTC
-    Cal2jd    Gregorian calendar to JD
+
+	Jd2cal    JD to Gregorian calendar
+	Dat       delta(AT) = TAI-UTC
+	Cal2jd    Gregorian calendar to JD
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	IERS Technical Note No. 32, BKG (2004)
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	Explanatory Supplement to the Astronomical Almanac,
+	P. Kenneth Seidelmann (ed), University Science Books (1992)
 */
 func Utctai(utc1, utc2 float64, tai1, tai2 *float64) int {
 	var big1 bool
@@ -2779,57 +2842,60 @@ Time scale transformation:  Coordinated Universal Time, UTC, to
 Universal Time, UT1.
 
 Given:
-    utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 1-4)
-    dut1       float64   Delta UT1 = UT1-UTC in seconds (Note 5)
+
+	utc1,utc2  float64   UTC as a 2-part quasi Julian Date (Notes 1-4)
+	dut1       float64   Delta UT1 = UT1-UTC in seconds (Note 5)
 
 Returned:
-    ut11,ut12  float64   UT1 as a 2-part Julian Date (Note 6)
+
+	ut11,ut12  float64   UT1 as a 2-part Julian Date (Note 6)
 
 Returned (function value):
-    int      status: +1 = dubious year (Note 3)
-                      0 = OK
-                     -1 = unacceptable date
+
+	int      status: +1 = dubious year (Note 3)
+	                  0 = OK
+	                 -1 = unacceptable date
 
 Notes:
 
- 1) utc1+utc2 is quasi Julian Date (see Note 2), apportioned in any
+ 1. utc1+utc2 is quasi Julian Date (see Note 2), apportioned in any
     convenient way between the two arguments, for example where utc1
     is the Julian Day Number and utc2 is the fraction of a day.
 
- 2) JD cannot unambiguously represent UTC during a leap second unless
+ 2. JD cannot unambiguously represent UTC during a leap second unless
     special measures are taken.  The convention in the present
     function is that the JD day represents UTC days whether the
     length is 86399, 86400 or 86401 SI seconds.
 
- 3) The warning status "dubious year" flags UTCs that predate the
+ 3. The warning status "dubious year" flags UTCs that predate the
     introduction of the time scale or that are too far in the future
     to be trusted.  See Dat for further details.
 
- 4) The function Dtf2d converts from calendar date and time of
+ 4. The function Dtf2d converts from calendar date and time of
     day into 2-part Julian Date, and in the case of UTC implements
     the leap-second-ambiguity convention described above.
 
- 5) Delta UT1 can be obtained from tabulations provided by the
+ 5. Delta UT1 can be obtained from tabulations provided by the
     International Earth Rotation and Reference Systems Service.
     It is the caller's responsibility to supply a dut1 argument
     containing the UT1-UTC value that matches the given UTC.
 
- 6) The returned ut11,ut12 are such that their sum is the UT1 Julian
+ 6. The returned ut11,ut12 are such that their sum is the UT1 Julian
     Date.
 
 References:
 
-    McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
-    IERS Technical Note No. 32, BKG (2004)
+	   McCarthy, D. D., Petit, G. (eds.), IERS Conventions (2003),
+	   IERS Technical Note No. 32, BKG (2004)
 
-    Explanatory Supplement to the Astronomical Almanac,
-    P. Kenneth Seidelmann (ed), University Science Books (1992)
+	   Explanatory Supplement to the Astronomical Almanac,
+	   P. Kenneth Seidelmann (ed), University Science Books (1992)
 
- Called:
-    Jd2cal    JD to Gregorian calendar
-    Dat       delta(AT) = TAI-UTC
-    Utctai    UTC to TAI
-    Taiut1    TAI to UT1
+	Called:
+	   Jd2cal    JD to Gregorian calendar
+	   Dat       delta(AT) = TAI-UTC
+	   Utctai    UTC to TAI
+	   Taiut1    TAI to UT1
 */
 func Utcut1(utc1, utc2, dut1 float64, ut11, ut12 *float64) int {
 	var iy, im, id, js, jw int
