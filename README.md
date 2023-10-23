@@ -73,12 +73,12 @@ go install github.com/hebl/gofa@latest
 
 ## Versions
 
-### v1.18
+### v1.19
 
-Version 1.18 is the first release. It include 192 routines for astronomy library, 55 routines for vector/matrix library.
+Version 1.19 include 192 routines for astronomy library, 55 routines for vector/matrix library.
 
 ## License
 
 - [SOFA License](sofa_copyr.txt)
 
-2022-03-30
+2023-10-23
