@@ -10,7 +10,7 @@ GoFA documents are in: <https://pkg.go.dev/github.com/hebl/gofa>
 
 GoFA functions are just translated from SOFA ANSI C functions.
 
-Current version 1.19 is the first release. It is based on SOFA version `19` ([2023-10-11](http://iausofa.org/2023_1011_C/))
+Current version is 1.19. It is based on SOFA version `19` ([2023-10-11](http://iausofa.org/2023_1011_C/))
 
 Examples in manuals are in the subdirectory: [examples](examples)
 
