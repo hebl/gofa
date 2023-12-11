@@ -1,16 +1,16 @@
 <a href="https://pkg.go.dev/github.com/hebl/gofa"><img src="https://pkg.go.dev/badge/github.com/hebl/gofa.svg" alt="Go Reference"></a>
 
-# GoFA
+[中文](README-zh_CN.md)
+
+# GoFA (Golang standards Of Fundamental Astronomy)
 
 GoFA is a pure Golang derived from the International Astronomical
 Union's (*IAU*) "`Standards Of Fundamental Astronomy (SOFA)`"  library
 official C release [http://iausofa.org](http://iausofa.org).
 
-GoFA documents are in: <https://pkg.go.dev/github.com/hebl/gofa>
+Reference documents are in: <https://pkg.go.dev/github.com/hebl/gofa>
 
-GoFA functions are just translated from SOFA ANSI C functions.
-
-Current version is 1.19. It is based on SOFA version `19` ([2023-10-11](http://iausofa.org/2023_1011_C/))
+GoFA Current version is 1.19. It is based on SOFA version `19` ([2023-10-11](http://iausofa.org/2023_1011_C/)). 
 
 Examples in manuals are in the subdirectory: [examples](examples)
 
@@ -75,10 +75,11 @@ go install github.com/hebl/gofa@latest
 
 ### v1.19
 
-Version 1.19 include 192 routines for astronomy library, 55 routines for vector/matrix library.
+Version 1.19 offers 192 routines for astronomy library (including time scales, Earth rotation, sidereal time, precession, nutation, polar motion, astrometry and transforms between various reference systems.), 55 routines for vector/matrix library.
 
 ## License
 
 - [SOFA License](sofa_copyr.txt)
+- [MIT License](LICENSE)
 
 2023-10-23
