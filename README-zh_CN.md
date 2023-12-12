@@ -4,8 +4,7 @@
 
 # GoFA (基础天文标准库，Golang standards Of Fundamental Astronomy)
 
-GoFA 是一个纯Go实现的基础天文计算库，基于国际天文联合会官方的`基础天文标准库`【`Standards Of Fundamental Astronomy (SOFA)`, [http://iausofa.org](http://iausofa.org)】
-实现。
+GoFA 是一个纯Go实现的基础天文计算库，基于国际天文联合会官方的`基础天文标准库`【`Standards Of Fundamental Astronomy (SOFA)`, [http://iausofa.org](http://iausofa.org)】实现。
 
 GoFA 开发文档： <https://pkg.go.dev/github.com/hebl/gofa>。
 
